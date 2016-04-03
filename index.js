@@ -4,7 +4,7 @@ function mcs(config) {
 
 mcs.prototype.register = function() {
   return __mcsTCPClient(config.deviceId, config.deviceKey, function(data) {
-    // Example: Dln7lL0G,zLfxhiabFnCEZZJc,1459307476444,encodeByMD5,test
+    // Example: AAA,XXX,1459307476444,encodeByMD5,test
     global.eventStatus.emit(data.split(',')[3], data.split(data.split(',')[3] + ',')[1]);
   });
 }
