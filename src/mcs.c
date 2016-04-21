@@ -253,7 +253,7 @@ void mcs_tcp_init(void (*mcs_tcp_callback)(char *))
     xTimerStart( heartbeat_timer, 0 );
 
     for (;;) {
-        char rcv_buf[MAX_JERRY_STRING_SIZE] = {0};
+        char rcv_buf[1024] = {0};
 
         if (0 == count) {
             ret = lwip_write(s, cmd_buf, sizeof(cmd_buf));
@@ -271,7 +271,7 @@ void mcs_tcp_init(void (*mcs_tcp_callback)(char *))
         LOG_I(common, "MCS tcp-client received data:%s", rcv_buf);
 
         /* split the string of rcv_buffer */
-        char split_buf[MAX_JERRY_STRING_SIZE] = {0};
+        char split_buf[1024] = {0};
         strcpy(split_buf, rcv_buf);
 
         char *arr[7];
