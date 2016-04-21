@@ -1,0 +1,13 @@
+{
+  "name": "ml-mcs",
+  "version": "0.0.1",
+  "description": "The mcs fota package for Microlattice.js",
+  "main": "index.js",
+  "src": ["./src/ml-mcs.c", "./src/mcs.c", "./src/mcs.h"],
+  "supportIC":[ "mt7687" ],
+  "scripts": {
+    "test": ""
+  },
+  "author": "iamblue",
+  "license": "Apache2"
+}
