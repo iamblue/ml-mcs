@@ -1,10 +1,16 @@
 {
   "name": "ml-mcs",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "The mcs fota package for Microlattice.js",
   "main": "index.js",
-  "src": ["./src/ml-mcs.c", "./src/mcs.c", "./src/mcs.h"],
-  "supportIC":[ "mt7687" ],
+  "src": [
+    "./src/ml-mcs.c",
+    "./src/mcs.c",
+    "./src/mcs.h"
+  ],
+  "supportIC": [
+    "mt7687"
+  ],
   "scripts": {
     "test": ""
   },
