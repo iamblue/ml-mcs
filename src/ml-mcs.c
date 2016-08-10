@@ -67,7 +67,7 @@ void _js_init()
 {
   jerry_init (JERRY_FLAG_EMPTY);
   jerry_api_value_t eval_ret;
-  js_lib_init();
+  js_lib_init("init");
   jerry_api_eval (&script, strlen (&script), false, false, &eval_ret);
   jerry_api_release_value (&eval_ret);
 
