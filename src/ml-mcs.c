@@ -202,14 +202,13 @@ DELCARE_HANDLER(__mcsClose)
 
 DELCARE_HANDLER(__mcsSend)
 {
-  char buf[100];
 
-  jerry_size_t msg_req_sz = jerry_get_string_size (args_p[0]);
+  jerry_size_t msg_req_sz = jerry_get_string_size (args_p[1]);
   jerry_char_t msg_buffer[msg_req_sz];
-  jerry_string_to_char_buffer (args_p[0], msg_buffer, msg_req_sz);
+  jerry_string_to_char_buffer (args_p[1], msg_buffer, msg_req_sz);
   msg_buffer[msg_req_sz] = '\0';
 
-  switch ((int) jerry_get_number_value(args_p[1])) {
+  switch ((int) jerry_get_number_value(args_p[2])) {
     case 0:
       message.qos = QOS0;
       break;
@@ -223,8 +222,14 @@ DELCARE_HANDLER(__mcsSend)
 
   message.retained = false;
   message.dup = false;
-  message.payload = (void *)msg_buffer;
-  message.payloadlen = strlen(msg_buffer) + 1;
+  message.payload = (void *) msg_buffer;
+  message.payloadlen = msg_req_sz;
+
+  jerry_size_t topic_req_sz = jerry_get_string_size (args_p[0]);
+  jerry_char_t topic_buffer[topic_req_sz];
+  jerry_string_to_char_buffer (args_p[0], topic_buffer, topic_req_sz);
+  topic_buffer[topic_req_sz] = '\0';
+
   rc = MQTTPublish(&c, topic_buffer, &message);
 
   return jerry_create_boolean(true);

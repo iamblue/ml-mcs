@@ -8,22 +8,38 @@
 
 ``` js
 
+// Regist MCS.
 __mcs(
   host,        // string
   port,        // string
   datachannel, // string
   client,      // string
   Qos,         // number
-  func,        // function
+  func,        // callback function, handle the MQTT msg.
 )
+
+// Send a datapoint.
+__mcsSend(
+  topic,       // string
+  data,        // string
+  Qos,         // number
+)
+
 
 ```
 
 ## Example
 
+Show a case: Get a message from MCS and send a message to MCS.
+
 ``` js
 
-  __pinmux(35, 8);
+  var sendChannel = 'sendmsg';
+  var receiveChannel = 'receivemsg';
+  var deviceId = 'Input your deviceId';
+  var deviceKey = 'Input your deviceKey';
+
+  var topic = 'mcs/' + deviceId + '/' + deviceKey + '/';
 
   __wifi({
     mode: 'station', // default is station
@@ -32,21 +48,24 @@ __mcs(
     password: 'Input your password',
   });
 
+  global.eventStatus.on(receiveChannel, function(data) {
+    print(data);
+    var msg = "hello world";
+    return __mcsSend(topic + sendChannel, ',,' + msg , 0);
+  });
+
   global.eventStatus.on('wifiConnect', function() {
     __mcs(
-      "mqtt.mcs.mediatek.com",                  // string
-      "1883",                                   // string
-      "mcs/{your deviceId}/{your deviceKey}/+", // string
-      '7687client',                             // string
-      0,                  // number: Qo0: 0, Qo1: 1, Qo2: 2
+      'mqtt.mcs.mediatek.com',
+      '1883',
+      topic + '+',
+      'mqtt-7687-client',
+      1,
       function(data) {
-        print(data);
-        if (data.indexOf("switch,1") === 14) {
-          __gpioWrite(35, 1);
-        } else if (data.indexOf("switch,0") === 14) {
-          __gpioWrite(35, 0);
-        }
-    });
+        global.eventStatus.emit(data.split(',')[1], data);
+      }
+    );
   });
+
 
 ```
