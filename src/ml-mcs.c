@@ -130,6 +130,11 @@ DELCARE_HANDLER(__mcs)
     printf("MQTT connect fail,status%d\n", rc);
   }
 
+  char script [] = "global.eventStatus.emit('mcsConnect', true);";
+  jerry_value_t eval_ret;
+  eval_ret = jerry_eval(script, strlen (script), false);
+  jerry_release_value (eval_ret);
+
   // printf("Subscribing to %s\n", topic_buffer);
 
   void messageArrived(MessageData *md) {

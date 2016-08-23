@@ -48,6 +48,10 @@ Show a case: Get a message from MCS and send a message to MCS.
     password: 'Input your password',
   });
 
+  global.eventStatus.on('mcsConnect', function() {
+    print('MCS connect!');
+  });
+
   global.eventStatus.on(receiveChannel, function(data) {
     print(data);
     var msg = "hello world";
