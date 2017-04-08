@@ -1,10 +1,9 @@
-/* Config of mqtt example */
+#define _MCS_H_
 
-#ifndef __MQTT_H_
-#define __MQTT_H_
+#define MCS_TCP_INIT_ERROR -1
+#define MCS_TCP_SOCKET_INIT_ERROR 0x1
+#define MCS_TCP_DISCONNECT 0x2
+#define MCS_MAX_STRING_SIZE 200
 
-//#define MQTT_USR_TLS
-//#define MQTT_USE_CLIENT_CERT
-
-
-#endif /* __MQTT_H_ */
+/* utils */
+void mcs_splitn(char ** dst, char * src, const char * delimiter, uint32_t max_split);
